@@ -136,6 +136,16 @@ $ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 
 
 <img width="800" src="https://user-images.githubusercontent.com/26833433/90222759-949d8800-ddc1-11ea-9fa1-1c97eed2b963.png">
 
+## Knoweldge Distillation
+if you want to distill knoweldge of teacher model
+
+```bash
+$ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 64 --teacher_weight [PATH TO MODEL WEIGHT]
+                                         yolov5m                                40
+                                         yolov5l                                24
+                                         yolov5x                                16
+```
+  
 </details>  
 
 <details open>
