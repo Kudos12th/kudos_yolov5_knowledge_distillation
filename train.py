@@ -297,7 +297,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
     
     if opt.teacher_weight:
         dump_image = torch.zeros((1, 3, opt.imgsz, opt.imgsz), device=device)
-        targets = torch.Tensor([[0, 0, 0, 0, 0, 0]], device=device)
+        targets = torch.Tensor([[0, 0, 0, 0, 0, 0]]).to(device)
         _, features, _ = model(dump_image, target=targets)  # forward
         _, teacher_feature, _ = teacher_model(dump_image, target=targets) 
         
