@@ -527,24 +527,6 @@ def parse_opt(known=False):
 
 
 def main(opt, callbacks=Callbacks()):
-    if not os.path.exists('./outputs'): os.makedirs('./outputs')
-    
-    if not os.path.exists('./dataset.zip'):
-        gdd.download_file_from_google_drive(file_id='1aX2m27L_CDfc5aO8ZylMTNAeOOr7028a', dest_path='./dataset.zip', showsize=True)
-        
-        with ZipFile('./dataset.zip', 'r') as zipObj:
-            zipObj.extractall()
-            
-    if not os.path.exists('./weight'):
-        os.makedirs('./weight')
-        
-    yolov5l6_id = '1sYHRy8uvBFJbNOPzOlzjEh3VUorHTy8S'
-    yolov5m6_id = '1F6e6fztaSjzY_XZMFqqrLJv-QDo5eQ_a'
-    yolov5s6_id = '1eAxFouSUlFlnMiooidbV3uI37hq5xXLo'
-    
-    for Id, file_name in ((yolov5s6_id, 'yolov5s6.pt'), (yolov5m6_id, 'yolov5m6.pt'), (yolov5l6_id, 'yolov5l6.pt')):
-        gdd.download_file_from_google_drive(file_id=Id, dest_path=f'weight/{file_name}', showsize=True)
-    
     # Checks
     set_logging(RANK)
     if RANK in [-1, 0]:
