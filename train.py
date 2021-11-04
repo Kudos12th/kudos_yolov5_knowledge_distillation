@@ -127,7 +127,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
     else:
         model = Model(cfg, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
 
-   if opt.teacher_weight:
+    if opt.teacher_weight:
         teacher_weight = opt.teacher_weight
         with torch_distributed_zero_first(LOCAL_RANK):
             weights = attempt_download(weights)  # download if not found locally
