@@ -120,6 +120,9 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
         model = Model(cfg or ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
         
         if opt.teacher_weight:
+            teacher_weight = opt.teacher_weight
+            with torch_distributed_zero_first(LOCAL_RANK):
+                weights = attempt_download(weights)  # download if not found locally
             teacher_ckpt = torch.load(teacher_weight, map_location=device) 
             teacher_model = Model(cfg or teacher_ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
         
