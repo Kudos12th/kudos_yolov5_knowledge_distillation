@@ -133,12 +133,8 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
             teacher_weight = attempt_download(teacher_weight)  # download if not found locally
         teacher_ckpt = torch.load(teacher_weight, map_location=device) 
         teacher_model = Model(cfg or teacher_ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
-        
-        exclude = ['anchor'] if (cfg or hyp.get('anchors')) and not resume else []  # exclude keys
-        csd = teacher_ckpt['model'].float().state_dict()  # checkpoint state_dict as FP32
-        csd = intersect_dicts(csd, model.state_dict(), exclude=exclude)  # intersect
-        teacher_model.load_state_dict(csd, strict=False)  # load
-        LOGGER.info(f'Transferred {len(csd)}/{len(teacher_model.state_dict())} items from {teacher_weight}')  # report
+       
+        LOGGER.info(f'Load teacher model from {teacher_weight}')  # report
 
     # Freeze
     freeze = [f'model.{x}.' for x in range(freeze)]  # layers to freeze
