@@ -1,3 +1,24 @@
+# YoloV5 Knoweldge Distillation
+this repository is implementation of [Distilling Object Detectors with Fine-grained Feature Imitation](https://openaccess.thecvf.com/content_CVPR_2019/papers/Wang_Distilling_Object_Detectors_With_Fine-Grained_Feature_Imitation_CVPR_2019_paper.pdf)
+
+
+if you want to distill knoweldge of teacher model
+
+```bash
+$ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 64 --teacher_weight yolov5s.pt
+                                         yolov5m.yaml                           40                  yolov5m.pt
+                                         yolov5l.yaml                           24                  yolov5l.pt
+                                         yolov5x.yaml                           16                  yolov5x.pt
+```
+
+## Results
+| teacher | student | mAP@.5 | mAP@.5:.95 | precision | recall |
+|---------|---------|--------|------------|-----------|--------|
+| yolov5m | yolov5n | 0.405  | 0.237      | 0.525     | 0.39   |
+| None    | yolov5n | 0.435  | 0.256      | 0.568     | 0.412  |
+
+---
+
 <div align="center">
 <p>
    <a align="left" href="https://ultralytics.com/yolov5" target="_blank">
@@ -135,16 +156,6 @@ $ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 
 ```
 
 <img width="800" src="https://user-images.githubusercontent.com/26833433/90222759-949d8800-ddc1-11ea-9fa1-1c97eed2b963.png">
-
-## Knoweldge Distillation
-if you want to distill knoweldge of teacher model
-
-```bash
-$ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 64 --teacher_weight [PATH TO MODEL WEIGHT]
-                                         yolov5m                                40
-                                         yolov5l                                24
-                                         yolov5x                                16
-```
   
 </details>  
 
