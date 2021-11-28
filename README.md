@@ -14,8 +14,8 @@ $ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 
 ## Results
 | teacher | student | mAP@.5 | mAP@.5:.95 | precision | recall |
 |---------|---------|--------|------------|-----------|--------|
-| yolov5m | yolov5n | 0.405  | 0.237      | 0.525     | 0.39   |
-| None    | yolov5n | 0.435  | 0.256      | 0.568     | 0.412  |
+|   None  | yolov5n | 0.405  | 0.237      | 0.525     | 0.39   |
+| yolov5m | yolov5n | 0.435  | 0.256      | 0.568     | 0.412  |
 
 ---
 
