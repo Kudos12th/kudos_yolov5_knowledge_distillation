@@ -116,10 +116,10 @@ class ComputeLoss:
             setattr(self, k, getattr(det, k))
             
     
-    def imitation_loss(self, student, teacher, mask):
+    def imitation_loss(self, teacher, student, mask):
         if student == None or teacher == None:
             return 0
-        # print(student.shape,teacher.shape, mask.shape)
+        # print(teacher.shape, student.shape, mask.shape)
         diff = torch.pow(student - teacher, 2) * mask
         diff = diff.sum() / mask.sum() / 2
     
