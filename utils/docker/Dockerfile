@@ -9,10 +9,10 @@ RUN apt update && apt install -y zip htop screen libgl1-mesa-glx
 # Install python dependencies
 COPY requirements.txt .
 RUN python -m pip install --upgrade pip
-RUN pip uninstall -y nvidia-tensorboard nvidia-tensorboard-plugin-dlprof
-RUN pip install --no-cache -r requirements.txt coremltools onnx gsutil notebook wandb>=0.12.2
-RUN pip install --no-cache -U torch torchvision numpy Pillow
-# RUN pip install --no-cache torch==1.10.0+cu113 torchvision==0.11.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+RUN pip uninstall -y torch torchvision torchtext
+RUN pip install --no-cache -r requirements.txt albumentations wandb gsutil notebook \
+    torch==1.11.0+cu113 torchvision==0.12.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+# RUN pip install --no-cache -U torch torchvision
 
 # Create working directory
 RUN mkdir -p /usr/src/app
@@ -20,18 +20,19 @@ WORKDIR /usr/src/app
 
 # Copy contents
 COPY . /usr/src/app
+RUN git clone https://github.com/ultralytics/yolov5 /usr/src/yolov5
 
 # Downloads to user config dir
-ADD https://ultralytics.com/assets/Arial.ttf /root/.config/Ultralytics/
+ADD https://ultralytics.com/assets/Arial.ttf https://ultralytics.com/assets/Arial.Unicode.ttf /root/.config/Ultralytics/
 
 # Set environment variables
-# ENV HOME=/usr/src/app
+ENV OMP_NUM_THREADS=8
 
 
 # Usage Examples -------------------------------------------------------------------------------------------------------
 
 # Build and Push
-# t=ultralytics/yolov5:latest && sudo docker build -t $t . && sudo docker push $t
+# t=ultralytics/yolov5:latest && sudo docker build -f utils/docker/Dockerfile -t $t . && sudo docker push $t
 
 # Pull and Run
 # t=ultralytics/yolov5:latest && sudo docker pull $t && sudo docker run -it --ipc=host --gpus all $t
@@ -59,3 +60,6 @@ ADD https://ultralytics.com/assets/Arial.ttf /root/.config/Ultralytics/
 
 # DDP test
 # python -m torch.distributed.run --nproc_per_node 2 --master_port 1 train.py --epochs 3
+
+# GCP VM from Image
+# docker.io/ultralytics/yolov5:latest
