@@ -1,4 +1,4 @@
-# YOLOv5 🚀 by Ultralytics, GPL-3.0 license
+# YOLOv5 🚀 by Ultralytics, AGPL-3.0 license
 """
 Run YOLOv5 benchmarks on all supported export formats
 
@@ -22,7 +22,7 @@ Requirements:
     $ pip install -U nvidia-tensorrt --index-url https://pypi.ngc.nvidia.com  # TensorRT
 
 Usage:
-    $ python utils/benchmarks.py --weights yolov5s.pt --img 640
+    $ python benchmarks.py --weights yolov5s.pt --img 640
 """
 
 import argparse
@@ -76,7 +76,12 @@ def run(
             if f == '-':
                 w = weights  # PyTorch format
             else:
-                w = export.run(weights=weights, imgsz=[imgsz], include=[f], device=device, half=half)[-1]  # all others
+                w = export.run(weights=weights,
+                               imgsz=[imgsz],
+                               include=[f],
+                               batch_size=batch_size,
+                               device=device,
+                               half=half)[-1]  # all others
             assert suffix in str(w), 'export failed'
 
             # Validate
@@ -164,6 +169,6 @@ def main(opt):
     test(**vars(opt)) if opt.test else run(**vars(opt))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     opt = parse_opt()
     main(opt)
