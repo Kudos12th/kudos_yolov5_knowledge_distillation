@@ -10,8 +10,8 @@ def make_center_anchors(anchors_wh, grid_size=80, device='cpu'):
 
     wh = torch.tensor(anchors_wh)
 
-    xy = xy.view(grid_size, grid_size, 1, 2).expand(grid_size, grid_size, 5, 2).type(torch.float32)  # centor
-    wh = wh.view(1, 1, 5, 2).expand(grid_size, grid_size, 5, 2).type(torch.float32)  # w, h
+    xy = xy.view(grid_size, grid_size, 1, 2).expand(grid_size, grid_size, 9, 2).type(torch.float32)  # centor
+    wh = wh.view(1, 1, 9, 2).expand(grid_size, grid_size, 9, 2).type(torch.float32)  # w, h
     center_anchors = torch.cat([xy, wh], dim=3).to(device)
     # cy cx w h
 

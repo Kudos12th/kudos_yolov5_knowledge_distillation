@@ -435,7 +435,8 @@ def parse_model(d, ch, get_anchor=False):  # model_dict, input_channels(3)
         if i == 0:
             ch = []
         ch.append(c2)
-
+    anchors = sum(anchors, [])
+    anchors = [(anchors[i] // 8, anchors[i + 1] // 8) for i in range(0, len(anchors), 2)]
     if get_anchor:
         return nn.Sequential(*layers), sorted(save), anchors
     return nn.Sequential(*layers), sorted(save)
