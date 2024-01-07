@@ -1,0 +1,7 @@
+names:
+- ball
+- goal
+path: ../../datasets/goalball-labelimg
+test: image/test
+train: image/train
+val: image/valid
