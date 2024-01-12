@@ -30,7 +30,7 @@ def check_anchor_order(m):
 def check_anchors(dataset, model, thr=4.0, imgsz=640):
     # Check anchor fit to data, recompute if necessary
     m = model.module.model[-1] if hasattr(model, 'module') else model.model[-1]  # Detect()
-    shapes = imgsz * dataset.shapes / dataset.shapes.max(1, keepdims=True)
+    shapes = imgsz * dataset.shapes / dataset.shapes.max(1, keepdims=True) # image size
     scale = np.random.uniform(0.9, 1.1, size=(shapes.shape[0], 1))  # augment scale
     wh = torch.tensor(np.concatenate([l[:, 3:5] * s for s, l in zip(shapes * scale, dataset.labels)])).float()  # wh
 
@@ -45,6 +45,7 @@ def check_anchors(dataset, model, thr=4.0, imgsz=640):
     stride = m.stride.to(m.anchors.device).view(-1, 1, 1)  # model strides
     anchors = m.anchors.clone() * stride  # current anchors
     bpr, aat = metric(anchors.cpu().view(-1, 2))
+    
     s = f'\n{PREFIX}{aat:.2f} anchors/target, {bpr:.3f} Best Possible Recall (BPR). '
     if bpr > 0.98:  # threshold to recompute
         LOGGER.info(f'{s}Current anchors are a good fit to dataset ✅')
