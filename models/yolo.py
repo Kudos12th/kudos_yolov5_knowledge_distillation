@@ -216,10 +216,12 @@ class DetectionModel(BaseModel):
         self.info()
         LOGGER.info('')
         
-    def _get_imitation_mask(self, x, targets, iou_factor=0.5):
+    def _get_imitation_mask(self, x, targets, iou_factor=0.75):
         """
         gt_box: (B, K, 4) [x_min, y_min, x_max, y_max]
         """
+        
+        print("--- targets : ", targets) # head의 두번째 블럭을 통과한 feature
         out_size = x.size(2)
         batch_size = x.size(0)
         device = targets.device
@@ -231,10 +233,12 @@ class DetectionModel(BaseModel):
         
         gt_boxes = [[] for i in range(batch_size)]
         for i in range(len(targets)):
+            print("#",i, int(targets[i, 0].data)) # TODO: targets[i, 0].data 확인. 클래스 명이면 gt_boxes는 해당 배치에 있는 모든 라벨의 [클래스] : bbox 좌표가 들어감. batch_size 의미 x 
             gt_boxes[int(targets[i, 0].data)] += [targets[i, 2:].clone().detach().unsqueeze(0)]
         
         max_num = 0
         for i in range(batch_size):
+            # TODO: 이렇게 하면 max_num이 높게 나온 이후엔 그 값이 유지되니까 계속 올라가게 되는건 아닌지 확인, 이렇게 맞추는 이유도 확인
             max_num = max(max_num, len(gt_boxes[i]))
             if len(gt_boxes[i]) == 0:
                 gt_boxes[i] = torch.zeros((1, 4), device=device)
@@ -242,7 +246,9 @@ class DetectionModel(BaseModel):
                 gt_boxes[i] = torch.cat(gt_boxes[i], 0)
         
         for i in range(batch_size):
-            # print(gt_boxes[i].device)
+            print(i)
+            print("gt_boxes :", gt_boxes[i])
+            print("max_num :", max_num)
             if max_num - gt_boxes[i].size(0):
                 gt_boxes[i] = torch.cat((gt_boxes[i], torch.zeros((max_num - gt_boxes[i].size(0), 4), device=device)), 0)
             gt_boxes[i] = gt_boxes[i].unsqueeze(0)
