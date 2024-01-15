@@ -232,18 +232,16 @@ class DetectionModel(BaseModel):
             return mask_batch
         
         gt_boxes = [[] for i in range(batch_size)]
-        print("--------------------------------------------")
-        print("targets :", targets)
-        print("targets.shape :", targets.shape())
+        print("targets.shape :", targets.shape)
         for i in range(len(targets)):
-            print("#",i)
+            print("#",targets[i, 0])
             print(int(targets[i, 0].data)) # TODO: targets[i, 0].data 확인. 클래스 명이면 gt_boxes는 해당 배치에 있는 모든 라벨의 [클래스] : bbox 좌표가 들어감. batch_size 의미 x 
             gt_boxes[int(targets[i, 0].data)] += [targets[i, 2:].clone().detach().unsqueeze(0)]
         
         max_num = 0
         for i in range(batch_size):
             # TODO: 이렇게 하면 max_num이 높게 나온 이후엔 그 값이 유지되니까 계속 올라가게 되는건 아닌지 확인, 이렇게 맞추는 이유도 확인
-            print("max_num, gt_boxes :", max_num, len(gt_boxes))
+            print("max_num, gt_boxes :", max_num, len(gt_boxes[i]))
             max_num = max(max_num, len(gt_boxes[i]))
             if len(gt_boxes[i]) == 0:
                 gt_boxes[i] = torch.zeros((1, 4), device=device)
