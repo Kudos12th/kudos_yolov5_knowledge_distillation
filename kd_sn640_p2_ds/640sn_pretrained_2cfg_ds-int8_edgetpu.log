@@ -4,21 +4,22 @@ Output: /content/640sn_pretrained_2cfg_ds-int8_edgetpu.tflite
 
 Operator                       Count      Status
 
-RESIZE_NEAREST_NEIGHBOR        2          Mapped to Edge TPU
-RESHAPE                        3          More than one subgraph is not supported
-RESHAPE                        3          Mapped to Edge TPU
-STRIDED_SLICE                  9          More than one subgraph is not supported
-PAD                            7          Mapped to Edge TPU
-CONCATENATION                  13         Mapped to Edge TPU
-CONCATENATION                  4          More than one subgraph is not supported
-LOGISTIC                       57         Mapped to Edge TPU
-LOGISTIC                       9          More than one subgraph is not supported
 ADD                            3          More than one subgraph is not supported
 ADD                            7          Mapped to Edge TPU
-MAX_POOL_2D                    3          Mapped to Edge TPU
-MUL                            57         Mapped to Edge TPU
-MUL                            18         More than one subgraph is not supported
+RESHAPE                        6          More than one subgraph is not supported
+PAD                            5          Mapped to Edge TPU
+PAD                            2          More than one subgraph is not supported
+CONCATENATION                  5          Mapped to Edge TPU
+CONCATENATION                  12         More than one subgraph is not supported
+LOGISTIC                       32         More than one subgraph is not supported
+LOGISTIC                       34         Mapped to Edge TPU
+RESIZE_NEAREST_NEIGHBOR        2          More than one subgraph is not supported
+STRIDED_SLICE                  9          More than one subgraph is not supported
+CONV_2D                        34         Mapped to Edge TPU
+CONV_2D                        26         More than one subgraph is not supported
+MUL                            34         Mapped to Edge TPU
+MUL                            41         More than one subgraph is not supported
 QUANTIZE                       1          Operation is otherwise supported, but not mapped due to some unspecified limitation
-QUANTIZE                       2          Mapped to Edge TPU
-QUANTIZE                       6          More than one subgraph is not supported
-CONV_2D                        60         Mapped to Edge TPU
+QUANTIZE                       4          More than one subgraph is not supported
+QUANTIZE                       1          Mapped to Edge TPU
+MAX_POOL_2D                    3          Mapped to Edge TPU
