@@ -5,10 +5,10 @@ this repository is implementation of [Distilling Object Detectors with Fine-grai
 if you want to distill knoweldge of teacher model
 
 ```bash
-$ python train.py --data coco.yaml --cfg yolov5s.yaml --weights '' --batch-size 64 --teacher_weight yolov5s.pt
-                                         yolov5m.yaml                           40                  yolov5m.pt
-                                         yolov5l.yaml                           24                  yolov5l.pt
-                                         yolov5x.yaml                           16                  yolov5x.pt
+$ python3 train.py --data data.yaml --cfg yolov5n.yaml --teacher_cfg yolov5s.yaml --weights yolov5n.pt --teacher_weight yolov5s.pt --batch-size 32  
+                                         yolov5m.yaml                                                                   yolov5m.pt
+                                         yolov5l.yaml                                                                   yolov5l.pt
+                                         yolov5x.yaml                                                                   yolov5x.pt
 ```
 
 ## Results
