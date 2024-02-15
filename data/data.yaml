@@ -8,3 +8,4 @@ val: valid/images
 names:
   0: ball
   1: goal
+  2: foot
